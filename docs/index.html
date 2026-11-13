@@ -1,25 +1,540 @@
 <!DOCTYPE html>
-<html lang="zh"><head>
+<html lang="zh">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<meta http-equiv="refresh" content="60">
-<title>爆款雷达 · 还在加载</title>
+<title>Anumi-Test-Viral</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
-       background:#0a0d13;color:#e8e8ea;text-align:center;padding:24px;
-       font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
-  .spin{width:34px;height:34px;margin:0 auto 26px;border:3px solid #2a2f3a;
-        border-top-color:#ff785a;border-radius:50%;animation:s 1s linear infinite}
-  @keyframes s{to{transform:rotate(360deg)}}
-  h1{font-size:23px;margin:0 0 14px;font-weight:600}
-  p{margin:8px 0;color:#9a9aa2;font-size:15px;line-height:1.75}
-  .hint{margin-top:30px;font-size:13.5px;color:#6e6e78}
-  @media(prefers-reduced-motion:reduce){.spin{animation:none}}
-</style></head><body><div>
-  <div class="spin"></div>
-  <h1>你的页面还在加载中,请稍等</h1>
-  <p>第一次大约需要 20-60 分钟。</p>
-  <p>这一页会自己刷新,你可以先去忙别的。</p>
-  <p class="hint">等很久都没变?回到安装 SOP 第 7 步,<br>到仓库的 Actions 看 Sync Content 有没有跑完。</p>
-</div></body></html>
+  :root {
+    --bg: #0a0d13;
+    --card: #11151d;
+    --card-hi: #151a24;
+    --border: #1d2430;
+    --border-hi: #2c3546;
+    --text: #e8ecf3;
+    --muted: #8a94a6;
+    --faint: #5b6577;
+    --accent: #5ea1ff;
+    --green: #3fd68f;
+    --orange: #f0a33f;
+    --pink: #ff6b9d;
+    --red: #ff5c5c;
+    --fire1: #ff8a3d;
+    --fire2: #ff4d6d;
+    --font: 'Inter', -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --disp: 'Space Grotesk', 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scrollbar-color: #232c3b var(--bg); }
+  body { background: var(--bg); color: var(--text); font-family: var(--font);
+    -webkit-font-smoothing: antialiased; }
+  ::selection { background: rgba(94,161,255,.3); }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #232c3b; border-radius: 8px; }
+  ::-webkit-scrollbar-thumb:hover { background: #2c3546; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+  .ic { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round; fill: none; flex: none; }
+
+  header { position: sticky; top: 0; z-index: 50; background: rgba(10,13,19,.86);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border); padding: 13px 20px 12px; }
+  .hrow { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; max-width: 1440px; margin: 0 auto; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+  .mark { width: 31px; height: 31px; border-radius: 9px; display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--fire1), var(--fire2));
+    box-shadow: 0 4px 16px rgba(255,92,80,.35); }
+  .mark .ic { width: 17px; height: 17px; color: #fff; }
+  h1 { font-family: var(--disp); font-size: 16.5px; font-weight: 700; letter-spacing: .2px; white-space: nowrap; line-height: 1.15; }
+  h1 small { display: block; color: var(--faint); font-family: var(--font); font-weight: 400;
+    font-size: 10.5px; letter-spacing: 0; }
+
+  .search { position: relative; }
+  .search > .ic { position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
+    color: var(--faint); width: 13.5px; pointer-events: none; }
+  input#fSearch { background: var(--card); color: var(--text); border: 1px solid var(--border);
+    border-radius: 10px; padding: 8px 12px 8px 32px; font-size: 13px; font-family: var(--font);
+    width: 200px; transition: border-color .18s, background .18s; }
+  input#fSearch:hover { border-color: var(--border-hi); }
+  input#fSearch:focus { border-color: var(--accent); outline: none; }
+  input#fSearch::placeholder { color: var(--faint); }
+
+  select, .btn { background: var(--card); color: var(--text); border: 1px solid var(--border);
+    border-radius: 10px; padding: 8px 11px; font-size: 13px; font-family: var(--font);
+    cursor: pointer; transition: border-color .18s, background .18s, color .18s;
+    display: inline-flex; align-items: center; gap: 6px; }
+  select:hover, .btn:hover { border-color: var(--border-hi); background: var(--card-hi); }
+  .btn:active { transform: scale(.97); }
+  .btn.on { border-color: var(--accent); color: var(--accent); background: rgba(94,161,255,.08); }
+
+  .tabs { display: flex; gap: 7px; flex-wrap: wrap; max-width: 1440px; margin: 12px auto 0; }
+  .tab { display: inline-flex; align-items: center; gap: 7px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 999px; padding: 6.5px 14px;
+    font-size: 13px; color: var(--muted); cursor: pointer; user-select: none;
+    transition: border-color .18s, background .18s, color .18s, transform .18s; }
+  .tab:hover { border-color: var(--border-hi); color: var(--text); }
+  .tab .cnt { font-family: var(--disp); font-weight: 600; font-size: 11px;
+    background: rgba(255,255,255,.06); padding: 1.5px 7.5px; border-radius: 99px;
+    font-variant-numeric: tabular-nums; }
+  .tab.on { color: var(--text);
+    background: linear-gradient(135deg, rgba(255,138,61,.15), rgba(255,77,109,.15));
+    border-color: rgba(255,120,90,.45); }
+  .tab.on .cnt { background: rgba(255,120,90,.25); }
+  body.dragging .tab.droppable { border-style: dashed; border-color: var(--accent); }
+  .tab.over { background: rgba(94,161,255,.22); color: var(--text); transform: scale(1.07); }
+
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; max-width: 1440px; margin: 9px auto 0; align-items: center; }
+  .chips .lbl { font-size: 12px; color: var(--faint); margin-right: 2px; }
+  .chip2 { display: inline-flex; align-items: center; gap: 5.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 999px; padding: 4.5px 12px;
+    font-size: 12px; color: var(--muted); cursor: pointer; user-select: none;
+    transition: border-color .18s, color .18s, background .18s;
+    font-variant-numeric: tabular-nums; }
+  .chip2 .ic { width: 12.5px; height: 12.5px; }
+  .chip2:hover { border-color: var(--border-hi); color: var(--text); }
+  .chip2.on { border-color: rgba(240,163,63,.6); color: var(--orange); background: rgba(240,163,63,.08); }
+
+  main { max-width: 1440px; margin: 22px auto; padding: 0 20px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(305px, 1fr)); gap: 18px; }
+
+  .card { position: relative; background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;
+    transition: transform .22s cubic-bezier(.2,.7,.3,1), border-color .22s, box-shadow .22s;
+    animation: fadeUp .45s cubic-bezier(.2,.7,.3,1) both; }
+  .card:hover { transform: translateY(-3px); border-color: var(--border-hi);
+    box-shadow: 0 12px 32px rgba(0,0,0,.45); }
+  .card.outlier::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--fire1), var(--fire2)); z-index: 2; }
+  .card[draggable] { cursor: grab; }
+  .card.lifting { opacity: .45; }
+  .card.saved { border-color: var(--green); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  .embed { position: relative; width: 100%; aspect-ratio: 4/5; background: #080b10; }
+  .embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .embed .ph { position: absolute; inset: 0; display: grid; place-items: center;
+    background: linear-gradient(110deg, #0b0e15 8%, #121826 18%, #0b0e15 33%);
+    background-size: 200% 100%; animation: shimmer 1.5s linear infinite; }
+  .embed .ph .ic { width: 30px; height: 30px; color: #2a3342; stroke-width: 1.6; }
+  @keyframes shimmer { to { background-position-x: -200%; } }
+
+  .meta { padding: 13px 15px 14px; display: flex; flex-direction: column; gap: 9px; }
+  .row1 { display: flex; align-items: center; gap: 7px; font-size: 13px; flex-wrap: wrap; }
+  .handle { color: #3a4456; cursor: grab; display: inline-flex; }
+  .handle .ic { width: 13px; height: 13px; }
+  .who { font-weight: 600; color: var(--accent); text-decoration: none; }
+  .who:hover { text-decoration: underline; }
+  .badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 500;
+    padding: 2.5px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); }
+  .badge .ic { width: 10.5px; height: 10.5px; }
+  .badge.bnew { color: var(--pink); border-color: rgba(255,107,157,.45); background: rgba(255,107,157,.07); }
+  .badge.bhorse { color: var(--orange); border-color: rgba(240,163,63,.45); background: rgba(240,163,63,.07); }
+  .badge.bbait { color: var(--accent); border-color: rgba(94,161,255,.4); background: rgba(94,161,255,.07); }
+  .date { margin-left: auto; color: var(--faint); font-size: 11px; font-variant-numeric: tabular-nums; }
+
+  .nums { display: flex; gap: 6px; flex-wrap: wrap; }
+  .num { display: inline-flex; align-items: center; gap: 5px; background: #0c0f16;
+    border: 1px solid var(--border); border-radius: 9px; padding: 5px 9px;
+    font-size: 11px; color: var(--muted); }
+  .num .ic { width: 11.5px; height: 11.5px; }
+  .num b { font-family: var(--disp); color: var(--text); font-size: 12.5px; font-weight: 600;
+    font-variant-numeric: tabular-nums; }
+  .num.hot { border-color: rgba(255,122,77,.35); }
+  .num.hot .ic, .num.hot b { color: #ff7a4d; }
+  .num.x { border-color: rgba(240,163,63,.35); }
+  .num.x .ic, .num.x b { color: var(--orange); }
+  .num.er .ic, .num.er b { color: var(--green); }
+
+  .cap { color: var(--muted); font-size: 12.5px; line-height: 1.55; display: -webkit-box;
+    -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; }
+  .cap.open { -webkit-line-clamp: unset; }
+  .cap b { color: var(--text); font-weight: 600; }
+  .ai { border-left: 2px solid var(--orange); background: rgba(240,163,63,.06);
+    padding: 8px 11px; border-radius: 0 10px 10px 0; font-size: 12px; line-height: 1.65;
+    color: var(--muted); }
+  .ai b { color: var(--orange); font-weight: 600; }
+  .mine { border-left: 2px solid var(--green); background: rgba(63,214,143,.06);
+    padding: 8px 11px; border-radius: 0 10px 10px 0; font-size: 12px; line-height: 1.65;
+    color: var(--muted); cursor: pointer; display: -webkit-box; -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical; overflow: hidden; white-space: pre-wrap; }
+  .mine.open { -webkit-line-clamp: unset; }
+  .mine b { color: var(--green); font-weight: 600; }
+
+  .srow { display: flex; align-items: center; gap: 7px; }
+  .srow label { font-size: 12px; color: var(--faint); }
+  .status { flex: 1; padding: 6px 9px; font-size: 12.5px; }
+  .status.s未处理 { color: var(--muted); }
+  .status.s拍摄中 { color: var(--orange); border-color: rgba(240,163,63,.5); }
+  .status.s已处理 { color: var(--green); border-color: rgba(63,214,143,.5); }
+  .status.s跳过 { color: var(--red); border-color: rgba(255,92,92,.5); }
+  .abtn { display: inline-flex; align-items: center; gap: 5px; background: #0c0f16;
+    color: var(--muted); border: 1px solid var(--border); border-radius: 9px;
+    padding: 6px 10px; font-size: 11.5px; font-family: var(--font); cursor: pointer;
+    text-decoration: none; transition: color .18s, border-color .18s, transform .1s; }
+  .abtn .ic { width: 12px; height: 12px; }
+  .abtn:hover { color: var(--accent); border-color: rgba(94,161,255,.5); }
+  .abtn:active { transform: scale(.95); }
+
+  .more { text-align: center; margin: 28px 0 44px; }
+  .more button { background: var(--card); color: var(--accent); border: 1px solid var(--border);
+    border-radius: 12px; padding: 11px 30px; font-size: 14px; font-family: var(--font);
+    cursor: pointer; transition: border-color .18s, background .18s; }
+  .more button:hover { border-color: var(--border-hi); background: var(--card-hi); }
+
+  .empty { color: var(--faint); text-align: center; padding: 70px 0; display: flex;
+    flex-direction: column; align-items: center; gap: 12px; font-size: 14px; }
+  .empty .ic { width: 34px; height: 34px; stroke-width: 1.5; color: #2c3546; }
+
+  footer { color: var(--faint); font-size: 11px; text-align: center; padding: 22px; }
+
+  #toast { position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%) translateY(8px);
+    background: var(--card-hi); border: 1px solid var(--border-hi); border-radius: 11px;
+    padding: 11px 20px; font-size: 13px; display: none; z-index: 99; opacity: 0;
+    box-shadow: 0 12px 32px rgba(0,0,0,.5); transition: opacity .2s, transform .2s; }
+  #toast.show { display: block; opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.5l7.1-.6z"/></symbol>
+  <symbol id="i-magnet" viewBox="0 0 24 24"><path d="m6 15-4-4 6.75-6.77a7.79 7.79 0 0 1 11 11L13 22l-4-4 6.39-6.36a2.14 2.14 0 0 0-3-3L6 15"/><path d="m5 8 4 4"/><path d="m12 15 4 4"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-clip" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6"/><path d="M9 16h6"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><path d="m10 8 6 4-6 4Z"/><rect x="2" y="4" width="20" height="16" rx="3"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></symbol>
+  <symbol id="i-pct" viewBox="0 0 24 24"><path d="M19 5 5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></symbol>
+</svg>
+<header>
+  <div class="hrow">
+    <div class="brand">
+      <div class="mark"><svg class="ic"><use href="#i-flame"/></svg></div>
+      <h1>Anumi-Test-Viral<small id="updated"></small></h1>
+    </div>
+    <div class="search"><svg class="ic"><use href="#i-search"/></svg>
+      <input id="fSearch" placeholder="搜文案 / hashtag / 账号"></div>
+    <select id="fTracker"><option value="">全部 Tracker</option></select>
+    <select id="fComp"><option value="">全部 Competitor</option></select>
+    <select id="fSort">
+      <option value="x">按 爆款倍数 (vs 自家平均)</option>
+      <option value="score">按 Viral Score</option>
+      <option value="er">按 Engagement Rate</option>
+      <option value="comments">按 Comments</option>
+      <option value="likes">按 Likes</option>
+      <option value="date">按 最新日期</option>
+    </select>
+    <button class="btn" id="fVideo"><svg class="ic"><use href="#i-video"/></svg>只看视频</button>
+
+    <a class="btn" href="team.html" target="_top" title="工作台"><svg class="ic"><use href="#i-users"/></svg>工作台</a>
+  </div>
+  <div class="tabs" id="tabs"></div>
+  <div class="chips" id="presets"></div>
+  <div class="chips" id="trends"></div>
+</header>
+<main>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none"><svg class="ic"><use href="#i-search"/></svg>没有符合条件的帖子</div>
+  <div class="more" id="moreWrap" style="display:none"><button id="moreBtn">载入更多</button></div>
+</main>
+<footer>数据来源 Supabase · 每周自动更新 · 状态更改即时同步全团队 · 视频由 Instagram 官方 embed 播放</footer>
+<div id="toast"></div>
+<script id="data" type="application/json">[{"id": "DfPCyGiscYG", "tracker": "Anumi-Test-Viral 竞对", "competitor": "miiohk.official", "caption": "A little extra maintenance with skin rejuvenation at @miiohk.official 🧖🏽‍♀️ so far, my skin’s looking healthier, dewier and a little smootherr 🩶\nnow I can go back to dancing, modelling and taking unnecessarily many pics and videos 🧑🏻‍🩰", "transcript": "", "brk": "Hook类型: 身份共鸣\n结构: 日常状态引入 → 医美项目展示 → 恢复后自信生活\n为什么火: 模特真实体验与精致生活方式结合，低门槛种草引发向往。\n改编角度: 结合本地网红日常，突出医美后上镜无瑕的直观自信。", "my": "每次照鏡子看到滿臉暗瘡印和泛紅，真係連拍照的自信都冇晒。\n\n好多女仔以為皮膚差，就是出油太多，跟著去瘋狂針清，或者亂用果酸。\n\n點知治標唔治本，搞到皮膚屏障受損，暗瘡反而越生越嚴重。\n\n其實暗瘡反覆發作，是因為沒有針對底層泛紅同血管問題對症下藥。\n\n第一個方法，先用 Skin-Tech Pro 3D 皮膚分析，找出暗瘡根源。\n\n這個分析儀會用全臉高清影像同多光譜檢測，客觀找出問題所在。\n\n做完分析之後，就可以制定出最適合你的專屬方案。\n\n第二個方法，配合最新一代 Stellar M22 XPL 的 Glide Mode。\n\n短脈寬設計讓能量輸出更快更密，真正做到一 Pass 打全面。\n\n過程暖笠笠勁舒服，合埋眼休息吓就搞掂，完全不用擔心刺痛。\n\n第三個方法，針對不同膚況切換專屬濾片。\n\n9款智能專利濾片能靈活切換，針對色斑、暗瘡印同泛紅問題逐層擊碎。\n\n做完之後肌膚回復淨透白滑，終於可以自信素顏出門。\n\n以前盲目針清亂用護膚品，搞到爛面兩年越醫越嚴重。\n\n現在用對了科學方法，皮膚終於重拾健康透亮。\n\n想了解自己的皮膚狀況適合哪種方案嗎？\n\n即刻 WhatsApp 5206 6795 預約免費 Skin-Tech Pro 皮膚分析。", "tags": "", "bait": false, "type": "Video", "likes": 191, "comments": 6, "er": 0.46, "followers": 42812, "date": "2026-11-02", "url": "https://www.instagram.com/p/DfPCyGiscYG/", "video": true, "ratio": 0, "score": 0.49, "status": "未处理", "x": 0}, {"id": "DdqohLcElED", "tracker": "Anumi-Test-Viral 竞对", "competitor": "lumierehk_", "caption": "【凹凸洞】一定揀【 BTL EXION 射頻微針】\n\n凹凸洞唔係表面問題，而係真皮層纖維化組織拉住皮膚，形成凹陷。\n所以，要改善凹凸洞，關鍵係：\n穿透 → 破壞 → 重生\n\n點解效果咁明顯？\n因為BTL EXION [AI] 黃金射頻微針 唔止做表面，而係：\n✅ 微針直達真皮層\n✅ 射頻熱能破壞纖維化組織\n✅ 刺激膠原蛋白＋彈力纖維自生重組\n✅ 由底層填平凹陷，撐起平滑膚質\n\n唔係遮蓋，係真正由底層重建。\n\n📍 📍留言 BTL\n搶先體驗 【BTL EXION [AI] 黃金射頻微針】力量！\nhttps://shorturl.at/kFxew\n\n#BTL #凹凸洞 #黃金微針 #收毛孔 #EXION", "transcript": "", "brk": "Hook类型: 痛点直击\n结构: 揭示凹凸洞根源 → 拆解仪器核心原理 → 呼吁留言体验\n为什么火: 用科学原理直击痛点，解释深层机制建立专业信任度\n改编角度: 针对痘坑患者，用微距动画直观展示射频断开纤维化组织的过程", "my": "狂搽果酸加瘋狂針清，暗瘡點解反而越生越嚴重？\n\n好多女仔一有暗瘡同凹凸洞，就以為係表面油脂太多。於是拼命去角質、亂用酸類，或者瘋狂去美容院針清。\n\n點知咁樣做，完全係治標唔治本，搞到皮膚屏障受損，暗瘡越搞越多，凹凸洞同紅印仲越踩越深。\n\n其實凹凸洞唔單止係表面問題，真正元兇係真皮層纖維化組織拉住皮膚，形成凹陷。\n\n要真正改善，靠求其搽護膚品係搞唔掂嘅，我哋要用對方法，幫肌膚打好底。\n\n第一步，先用專業 3D AI 皮膚影像分析系統。用高清影像同 AI 檢測，精準搵出暗瘡同凹凸洞嘅根源，唔使盲目試錯。\n\n第二步，做最新一代 Stellar M22 XPL 極光嫩膚。利用全新嘅 Glide Mode 滑動模式，短脈寬設計做到一 Pass 打全面，將療程時間縮短一半。\n\n配合專利濾片，針對唔同嘅深層色素同微絲血管，將暗瘡印同泛紅問題逐層擊碎，過程暖笠笠又舒服。\n\n第三步，試埋全港獨家嘅光學三文治療程。由 Hydra 水上飄溫和去角質，到 1064nm Laser 打好光學底，最後深層注水鎮靜，層層把關修復受損肌膚。\n\n之前有個客人，爛面足足兩年，試勻曬唔同方法都冇用。後來嚟到尖沙咀美麗華商場或者銅鑼灣分店，經過我們專業團隊嘅量膚定制，皮膚終於慢慢回復平滑透亮。\n\n以前淨係識得盲目去角質同針清，搞到皮膚越來越敏感；而家識得用 AI 結合醫學光學，對症下藥，成個膚質都穩定曬。\n\n如果你都有同樣嘅困擾，想知自己適合邊個方案，即刻 WhatsApp 5206 6795 預約免費 Skin-Tech Pro 皮膚分析啦。", "tags": "BTL, 凹凸洞, 黃金微針, 收毛孔, EXION", "bait": true, "type": "Video", "likes": 12, "comments": 0, "er": 0.25, "followers": 4818, "date": "2026-09-24", "url": "https://www.instagram.com/p/DdqohLcElED/", "video": true, "ratio": 0, "score": 0.25, "status": "未处理", "x": 1.2}, {"id": "De_bk8bn162", "tracker": "Anumi-Test-Viral 竞对", "competitor": "lumierehk_", "caption": "✤重要消息✤\n新店Lumière x Ombrée✨即將同大家見面 \n\n首先感謝大家13年來的信任與一路相伴。品牌為打造更多元素的豐富療程體驗，我哋好開心同大家宣佈，以升級姿態搬遷至全新旗艦新址喇！🎉新店環境更具柔和氣息，全方位升級頂尖設備，更特別增設了獨立 VIP 淋浴 Spa 房間，希望帶畀大家耳目一新的感覺。\n\n✨ Lumière｜\n提供獲國際認證的醫學美容儀器療程，打造客製化的美肌方案\n\n🌙 Ombrée｜ @ombreehk_ \n全新獨有・深層身心靈療癒體驗，結合五感療癒、香氛、專業與沉浸式 Spa 體驗，打造讓身體與心靈一同回歸純粹的鬆弛與平衡\n\n✤ ✤ ✤ ✤ ✤ ✤ ✤ ✤ ✤ ✤ ✤ ✤ ✤ ✤\n\n📍 新店地址：尖沙咀美麗華商場6樓611室\n🗓️ 新店開張日期：2026年11月2日\n🛑 舊店最後營業日：2026年10月31日\n\n✤ ✤ ✤ ✤ ✤ ✤ ✤ ✤ ✤ ✤ ✤ ✤ ✤ ✤\n\n💡 小貼士：\n- 搬遷期間如果牽涉到預約改期，我哋嘅客服好快會聯絡你，大家唔使擔心。\n- 療程套票、餘額同積分會全部自動過落新店，權益絕對不受影響，可以 100% 放心 ❤️\n- 如果有任何關於新店或者預約嘅嘢想問，隨時 WhatsApp 聯絡我哋。\n\n好多謝你嘅支持，期待好快喺新店見到你！", "transcript": "", "brk": "Hook类型: 身份共鸣\n结构: 品牌里程碑 → 升級亮點展示 → 貼心客服指引\n为什么火: 藉由13年老店搬遷疊加全新旗艦體驗，精準激活舊客信任感與期待感。\n改编角度: 結合醫美新店開幕，推出「升級版旗艦體驗」限定優惠，吸引新客打卡探店。", "my": "", "tags": "", "bait": false, "type": "Image", "likes": 10, "comments": 0, "er": 0.21, "followers": 4818, "date": "2026-10-27", "url": "https://www.instagram.com/p/De_bk8bn162/", "video": false, "ratio": 0, "score": 0.21, "status": "未处理", "x": 1.0}, {"id": "Dd3DKsJgT0v", "tracker": "Anumi-Test-Viral 竞对", "competitor": "lumierehk_", "caption": "【 M22 XPL 終極美白！Show Your Body！🏐】\n\n想擁有均勻透亮嘅身體肌膚，唔應該只係夏天嘅專利!\n告別臉部身體兩節色，M22 XPL 由肌底根源綻白，還原真正透亮膚色。\n\n💿三塊濾片、分層精準處理\n560nm 濾片：表層色素的「清道夫」\n590nm 濾片：抗炎與祛黃的「中場核心」\n695nm 濾片：深層色素的「終極武器」\n\n✨ 療程效果：\n✅ 全身透白 — 均勻膚色\n✅ 極光革肌 — 改善粗糙\n✅ 分層治療 — 針對不同深淺問題\n\n真正嘅透白，由肌底開始。\n立即預約 Stellar M22 XPL，今個夏天，自信 Show Your Body！\n\n📍 📍留言 BODY\n搶先體驗 【Stellar M22 XPL 光子綻白】力量！\nhttps://shorturl.at/tGuJn\n\n#M22XPL #身體美白 #去印 #紅印 #嫩膚", "transcript": "", "brk": "Hook类型: 痛点直击\n结构: 痛点引入（脸身色差） → 技术拆解（三滤片分层） → 效果承诺与行动呼吁\n为什么火: 精准切中秋冬身体美白需求，用专业滤片参数建立权威信任感\n改编角度: 突出“告别尴尬色差”，主打私密部位或关节美白痛点进行场景化演绎", "my": "好多女仔照鏡嘅時候，成日發現面色同頸成兩截色，點遮都遮唔住。\n\n好多人以為狂搽美白精華，或者買最貴嘅面霜，就一定可以白返轉頭。\n\n點知試勻咁多方法，塊面仲係暗啞泛紅，搞到個人望落去好冇精神。\n\n其實根本唔係你護膚品唔夠好，係你冇對症下藥處理好底層嘅問題。\n\n今日同大家講三個真正幫皮膚白返透亮嘅做法。\n\n第一個做法，係先用專業嘅 Skin-Tech Pro 3D 皮膚分析。\n\n透過全面高清影像同 AI 分析，搵出你塊面到底係色素沉澱定係微絲血管泛紅。\n\n知道自己嘅膚況之後，先至唔會盲目跟風買一堆唔適合嘅護膚品。\n\n第二個做法，係試吓最新一代 Stellar M22 XPL 極光嫩膚。\n\n呢部機有成九款智能專利濾片，無論係頑固色斑定係暗瘡印都可以照顧到。\n\n配合全新嘅 Glide Mode 滑動模式，能量輸出更快更密。\n\n治療時間縮短咗一半以上，過程暖笠笠，仲可以幫你好好放鬆。\n\n第三個做法，係定期做光學三文治療程。\n\n先用 Hydra 水上飄溫和去角質，跟住打光學底，再用 M22 XPL 分層處理。\n\n最後做無針注水，幫肌膚深層補濕鎮靜。\n\n有個客人試過連續兩年爛面，試過狂搽果酸同瘋狂針清，搞到皮膚屏障受損。\n\n嚟到之後透過量膚定制嘅光學三文治療程，皮膚終於慢慢回復健康透亮。\n\n以前淨係識得盲目亂試，搞到皮膚越整越差，仲成日覺得好灰心。\n\n而家識得用科學方法去分析，配合專業嘅光學療程，皮膚先至真正穩定落嚟。\n\n如果你都想改善暗啞同膚色不均嘅問題，依家可以即刻 WhatsApp 5206 6795 預約免費 Skin-Tech Pro 皮膚分析。", "tags": "M22XPL, 身體美白, 去印, 紅印, 嫩膚", "bait": true, "type": "Image", "likes": 8, "comments": 0, "er": 0.17, "followers": 4818, "date": "2026-09-29", "url": "https://www.instagram.com/p/Dd3DKsJgT0v/", "video": false, "ratio": 0, "score": 0.17, "status": "未处理", "x": 0.8}, {"id": "Deyr9LPmcx0", "tracker": "Anumi-Test-Viral 竞对", "competitor": "vigour.evrbeauty", "caption": "【色斑大解構🔍 你塊面嘅斑，究竟屬於邊一種？😱】\n\n明明日日搽美白精華、勤力防曬，點解面上啲斑都仲係咁頑固？😭 其實色斑都有分好多種！雀斑、太陽斑、荷爾蒙斑……成因唔同，改善方法自然都唔一樣！✨\n\n🔎 6大常見色斑，你又中咗邊種？\n🤎 雀斑｜細小啡色斑點，與遺傳及紫外線有關\n🤎 太陽斑｜長期日曬累積，形成啡色斑塊\n🤎 老人斑｜隨年齡增長出現，部分斑點可能隆起\n🤎 咖啡牛奶斑｜淺啡色斑塊，大小形狀不一\n🤎 荷爾蒙斑｜深淺不均，與荷爾蒙及日曬等因素有關\n🤎 顴骨母斑｜常見於顴骨位置，呈灰啡色斑點\n\n✨ 想同頑固色斑講 Bye Bye？試吓 VIGOUR Spot Killer™️ 斑點剋星！\n\n🌟 Vigour Spot Killer™️ 激光去斑療程\n✔️ 針對不同類型色素問題，制定個人化方案\n✔️ 以專業光學技術針對黑色素\n✔️ 幫助減淡色斑，改善膚色不均\n✔️ 提升肌膚透亮感，重拾細緻光澤\n\n📸 真人去斑案例實證！\n唔使再靠厚厚遮瑕掩蓋色斑！睇吓圖中雀斑、太陽斑嘅 Before & After，見證色斑減淡、膚色更均勻嘅變化！💖\n\n📍VIGOUR 專業皮膚管理\n✨ Spot Killer™️ 斑點剋星\n📲 立即 WhatsApp 預約專業皮膚評估：6550 1563\n\n📍旺角 📍尖沙咀 📍銅鑼灣\n\n療程效果因個人膚質、色斑類型及護理情況而異。色斑應先經專業評估。\n\n#VIGOUR #SpotKiller #斑點剋星 #激光去斑 #去斑療程", "transcript": "", "brk": "Hook类型: 痛点直击\n结构: 痛点抛出 → 6大色斑分类科普 → 专属疗程亮点 → 真人案例转化\n为什么火: 精准击中患者“盲目美白无效”的痛点，用专业分类建立信任再带出解法。\n改编角度: 拍摄真人逐一辨认自己是哪种斑的互动短视频，增强沉浸感与对号入座率。", "my": "明明日日狂搽美白精華，面上啲斑點點解仲係越來越深？\n\n好多靚靚第一時間就以為，買最貴嘅美白產品就可以搞掂。\n\n點知治標唔治本，面上啲頑固色斑仲係原封不動。\n\n其實色斑有分好多種，雀斑、太陽斑同荷爾蒙斑成因完全唔同。\n\n第一步，先用專業 3D AI 皮膚影像分析系統，找出色斑真正根源。\n\n唔同深淺嘅色素，要用唔同嘅方法去對症下藥。\n\n第二步，利用最新一代 Stellar M22 XPL 極光嫩膚。\n\n配備九款專利濾片，靈活切換針對唔同嘅色素問題。\n\n配合革命性 Glide Mode 滑動模式，過程暖笠笠又舒服。\n\n真正做到一 Pass 打全面，大幅節省療程時間。\n\n第三步，做完之後記得配合 LUMIZU Gel Mask 強效保濕。\n\nGoogle 總評分有五點零，已經有一百四十六人親身體驗過。\n\n以前自己盲目亂搽護膚品，塊面又乾又敏感，斑點完全冇變淡。\n\n用對方法之後，膚色真係均勻好多，成塊面透出健康光澤。\n\n想了解自己屬於邊種色斑？\n\n即刻 WhatsApp 五二零六六七九五，預約免費 Skin-Tech Pro 皮膚分析。", "tags": "VIGOUR, SpotKiller, 斑點剋星, 激光去斑, 去斑療程", "bait": false, "type": "Carousel", "likes": -1, "comments": 0, "er": -0.01, "followers": 10093, "date": "2026-10-22", "url": "https://www.instagram.com/p/Deyr9LPmcx0/", "video": false, "ratio": 0, "score": 0.0, "status": "未处理", "x": 0}, {"id": "Dd5ehg-mJ49", "tracker": "Anumi-Test-Viral 竞对", "competitor": "vigour.evrbeauty", "caption": "回顧這個中秋，Vigour 也想把一份溫暖心意，送到每一位一直支持我們的客戶手上。🌕✨\n今年中秋，我們特別準備了月餅，與大家分享節日的喜悅。\n\n對 Vigour 而言，這不只是一份小禮物，更是想藉著這個節日，向每一份信任與陪伴說聲謝謝。\n\n由每一次肌膚諮詢、療程體驗，到之後的細心跟進，我們一直相信，真正重要的不只是療程本身，而是每一次認真聆聽、每一次專業照顧，以及與客戶慢慢建立起來的信任。\n\n這個中秋，很開心可以用一份小小心意，回應大家一直以來對 Vigour 的支持。🤍\n\n謝謝每一位與 Vigour 同行的你。\n\n未來，我們也會繼續以專業、細心與真誠，陪伴大家照顧肌膚，見證每一次變化。✨\n#Vigour #皮膚管理專家 #中秋回顧", "transcript": "", "brk": "Hook类型: 身份共鸣\n结构: 节日送礼回顾 → 表达感恩陪伴 → 承诺专业服务\n为什么火: 通过节日情感回馈拉近客户距离，强化品牌温度与信任感。\n改编角度: 结合医美疗程前后对比，突出客户送礼背后的真实感动与长期陪伴故事。", "my": "🚨爛面兩年，狂搽果酸暗瘡反而越生越嚴重？🤯\n\n好多女仔一有暗瘡，第一時間以為自己面油多。\n於是盲目去針清，或者亂用果酸。\n點知搞到皮膚屏障受損，搞到自己變成敏感暗瘡肌。\n\n其實問題唔係出喺出油度，係你根本冇對症下藥。\n\n想要真正搞掂敏感同暗瘡，我哋要做足準備。\n第一步，我哋要用 Skin-Tech Pro 3D 皮膚分析儀。\n先用客觀數據，找出你生暗瘡嘅真正根源。\n唔使盲目估，先至可以對症下藥。\n\n第二步，做最新一代 Stellar M22 XPL 極光嫩膚。\n透過 9 款智能專利濾片，靈活切換針對唔同問題。\n配合革命性嘅 Glide Mode 滑動模式。\n短脈寬設計，能量輸出更快更密。\n真正做到一 Pass 打全面，過程暖笠笠勁舒服。\n幫你精準瓦解暗瘡印同泛紅問題。\n\n第三步，做光學三文治療程。\n結合 Hydra 水上飄溫和去角質，疏通毛孔。\n再打 1064nm Laser 喚醒底層細胞。\n最後配合無針注水，深層注入水分鎮靜舒緩。\n成個過程幫你層層把關，唔會再盲目咁試錯。\n\n以前好多客人，因為亂用方法搞到皮膚又紅又痛。\n而家用對咗方法，做好每一步。\n皮膚慢慢變返白滑透亮，搵返健康嘅狀態。\n\n👉🏻 即刻 WhatsApp 5206 6795 預約免費 Skin-Tech Pro 皮膚分析，體驗專屬嘅治療方案啦！", "tags": "Vigour, 皮膚管理專家, 中秋回顧", "bait": false, "type": "Carousel", "likes": -1, "comments": 0, "er": -0.01, "followers": 10093, "date": "2026-09-30", "url": "https://www.instagram.com/p/Dd5ehg-mJ49/", "video": false, "ratio": 0, "score": 0.0, "status": "未处理", "x": 0}, {"id": "Dds4aKvAbOY", "tracker": "Anumi-Test-Viral 竞对", "competitor": "vigour.evrbeauty", "caption": "月圓・人圓・美好團圓 🌕\n\n月光漸圓，團聚嘅時刻亦悄然而至。\n\nVIGOUR 祝大家中秋節快樂，願每一份牽掛都有回應，每一次相聚都充滿溫暖。\n今個中秋，願你與重要嘅人共賞明月，享受屬於彼此嘅圓滿時光。✨\n\n#Vigour #專業皮膚管理 #中秋節 #MidAutumnFestival", "transcript": "", "brk": "Hook类型: 身份共鸣\n结构: 节日祝福 → 品牌关怀 → 美好愿景\n为什么火: 借势传统节日拉近与用户的距离，传递品牌温度。\n改编角度: 结合中秋节推出“月圆人圆”微调或皮肤管理节日专属优惠套餐。", "my": "點解有啲人明明冇乜暗瘡，但塊面總係成日紅卜卜又好似退唔到咁？\n\n好多女仔一見到塊面泛紅或者起粒粒，第一時間就以為係敏感，跟住盲目去藥房買啲修護膏返嚟狂搽，以為過幾日就會好。\n\n點知越搽越差，皮膚屏障反而越整越受損，搞到泛紅同暗瘡印一直跟住你。\n\n其實你可能係用錯咗方法，冇對症下藥去處理底層嘅血管問題。\n\n今日同大家分享三個真係帮到手嘅做法，幫你搵返健康皮膚。\n\n第一步，做專業嘅 AI 皮膚分析。唔好自己盲目估，先用 Skin-Tech Pro 睇清楚底層問題，知道自己係泛紅定係色素沉澱，咁先至可以對症下藥。\n\n第二步，試吓最新一代嘅 Stellar M22 XPL。佢有革命性嘅 Glide Mode 滑動模式，短脈寬設計輸出更快更密，真正做到一 Pass 打全面，成個過程暖笠笠又舒服。\n\n第三步，配搭專利濾片同水潤修護。透過唔同嘅濾片針對暗瘡印同微絲血管，做完之後再補水，成個療程收費透明，而且有原廠正貨安全至上。\n\n以前好多客人成日亂用護膚品，結果搞到皮膚又紅又敏感，仲浪費咗好多冤枉錢。\n\n轉咗用對應嘅方法同最新一代嘅 M22 之後，唔單止降紅快咗，皮膚仲慢慢變返透亮。\n\n想知自己嘅膚況適唔適合做？即刻 WhatsApp 5206 6795 預約免費 Skin-Tech Pro 皮膚分析啦。", "tags": "Vigour, 專業皮膚管理, 中秋節, MidAutumnFestival", "bait": false, "type": "Image", "likes": -1, "comments": 0, "er": -0.01, "followers": 10093, "date": "2026-09-25", "url": "https://www.instagram.com/p/Dds4aKvAbOY/", "video": false, "ratio": 0, "score": 0.0, "status": "未处理", "x": 0}]</script>
+<script>
+const DATA = JSON.parse(document.getElementById('data').textContent);
+const SUPA = 'https://xgyxycpyvawapbddfmmb.supabase.co';
+const ANON = 'sb_publishable_-7E8OAYE8o9d0jq0zAp-Lg_ZTOGGANc';
+const STATUSES = ["未处理", "拍摄中", "已处理", "跳过"];
+document.getElementById('updated').textContent = '更新于 2026-11-13 11:05 (GMT+8)';
+const PAGE = 48;
+let shown = PAGE;
+let videoOnly = false;
+let curTab = '全部';
+
+const $ = id => document.getElementById(id);
+const fmt = n => n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'K' : String(n);
+const getKey = () => ANON;  // anon key is baked in — safe, can only change status
+const I = n => '<svg class="ic"><use href="#i-' + n + '"/></svg>';
+const esc = s => String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const byRec = {}; DATA.forEach(d => byRec[d.id] = d);
+const TRENDS = [];
+DATA.forEach(d => {
+  d.days = d.date ? Math.max(0, Math.floor((Date.now() - new Date(d.date + 'T00:00:00')) / 864e5)) : null;
+  d.horse = d.followers > 0 && d.followers < 50000 && ((d.x || 0) >= 2 || d.score >= 10);
+});
+const PRESETS = [
+  { k: 'px', icon: 'trend', label: '真爆款 ×2+', f: d => (d.x || 0) >= 2 },
+  { k: 'pn', icon: 'star', label: '近7天', f: d => d.days !== null && d.days <= 7 },
+  { k: 'ph', icon: 'zap', label: '黑马', f: d => d.horse },
+  { k: 'pb', icon: 'magnet', label: '引流帖', f: d => d.bait },
+];
+const presetOn = {};
+
+function toast(msg, ok) {
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  t.style.borderColor = ok ? 'var(--green)' : 'var(--red)';
+  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// filters
+const comps = [...new Set(DATA.map(d => d.competitor))].sort();
+comps.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = '@'+c; $('fComp').appendChild(o); });
+[...new Set(DATA.map(d => d.tracker))].forEach(t => { const o = document.createElement('option'); o.value = t; o.textContent = t; $('fTracker').appendChild(o); });
+
+function matchQ(d) {
+  const q = ($('fSearch').value || '').trim().toLowerCase();
+  return !q || (d.caption + ' ' + (d.tags || '') + ' ' + (d.transcript || '') + ' ' + (d.brk || '') + ' ' + d.competitor).toLowerCase().includes(q);
+}
+
+function basePool() {
+  const t = $('fTracker').value, c = $('fComp').value;
+  return DATA.filter(d => (!t || d.tracker === t) && (!c || d.competitor === c) && (!videoOnly || d.video)
+    && matchQ(d) && PRESETS.every(p => !presetOn[p.k] || p.f(d)));
+}
+
+function filtered() {
+  const s = $('fSort').value;
+  let arr = basePool().filter(d => curTab === '全部' || d.status === curTab);
+  const key = { score:'score', er:'er', comments:'comments', likes:'likes', x:'x' }[s];
+  if (s === 'date') arr.sort((a,b) => (b.date||'').localeCompare(a.date||''));
+  else arr.sort((a,b) => (b[key]||0) - (a[key]||0));
+  return arr;
+}
+
+let dragRec = null;
+
+function renderTabs() {
+  const pool = basePool();
+  const counts = { '全部': pool.length };
+  STATUSES.forEach(s => counts[s] = pool.filter(d => d.status === s).length);
+  $('tabs').innerHTML = '';
+  ['全部', ...STATUSES].forEach(name => {
+    const el = document.createElement('div');
+    el.className = 'tab' + (curTab === name ? ' on' : '') + (name !== '全部' ? ' droppable' : '');
+    el.innerHTML = esc(name) + ' <span class="cnt">' + counts[name] + '</span>';
+    el.onclick = () => { curTab = name; shown = PAGE; render(); };
+    if (name !== '全部') {
+      el.ondragover = e => { if (dragRec) { e.preventDefault(); el.classList.add('over'); } };
+      el.ondragleave = () => el.classList.remove('over');
+      el.ondrop = e => {
+        e.preventDefault(); el.classList.remove('over');
+        const d = byRec[dragRec]; dragRec = null;
+        if (d && d.status !== name) setStatus(d, name);
+      };
+    }
+    $('tabs').appendChild(el);
+  });
+}
+
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target, pid = el.dataset.pid;
+      if (!el.querySelector('iframe')) {
+        const f = document.createElement('iframe');
+        f.src = 'https://www.instagram.com/p/' + pid + '/embed/';
+        f.loading = 'lazy'; f.allow = 'autoplay; encrypted-media';
+        el.appendChild(f);
+      }
+      io.unobserve(el);
+    }
+  });
+}, { rootMargin: '400px' });
+
+async function setStatus(d, val) {
+  try {
+    const r = await fetch(SUPA + '/rest/v1/posts?post_id=eq.' + encodeURIComponent(d.id), {
+      method: 'PATCH',
+      headers: { 'apikey': ANON, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ status: val })
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    d.status = val;
+    cacheStatus(d.id, val);
+    toast('✓ @' + d.competitor + ' 已移到「' + val + '」', true);
+  } catch (e) {
+    toast('更新失败: ' + e.message + (String(e.message).includes('401') || String(e.message).includes('403') ? ' — 密钥无效?' : ''), false);
+  }
+  render();
+}
+
+function card(d, idx) {
+  const el = document.createElement('div');
+  el.className = 'card' + ((d.x || 0) >= 2 ? ' outlier' : '');
+  el.style.animationDelay = Math.min(idx % PAGE, 14) * 30 + 'ms';
+  el.draggable = true;
+  el.ondragstart = e => {
+    dragRec = d.id;
+    e.dataTransfer.effectAllowed = 'move';
+    el.classList.add('lifting');
+    document.body.classList.add('dragging');
+  };
+  el.ondragend = () => {
+    el.classList.remove('lifting');
+    document.body.classList.remove('dragging');
+    dragRec = null;
+  };
+  const typeIcon = d.video ? 'video' : (d.type === 'Carousel' ? 'layers' : 'image');
+  const days = d.days, horse = d.horse;
+  const ago = days === null ? '' : (days === 0 ? '今天' : days + '天前');
+  const lines = (d.caption || '').split('\n').map(l => l.trim()).filter(Boolean);
+  const hook = lines[0] || '';
+  const tr = (d.transcript && d.transcript !== '(转录失败)' && d.transcript !== '(无口播内容)') ? d.transcript : '';
+  el.innerHTML = `
+    <div class="embed" data-pid="${d.id}"><div class="ph"><svg class="ic"><use href="#i-${typeIcon}"/></svg></div></div>
+    <div class="meta">
+      <div class="row1">
+        <span class="handle" title="拖到上方 tab 即可归类">${I('grip')}</span>
+        <a class="who" href="https://www.instagram.com/${d.competitor}/" target="_blank">@${d.competitor}</a>
+        <span class="badge">${d.type || '-'}</span>
+        ${days !== null && days <= 7 ? '<span class="badge bnew">' + I('star') + '新帖</span>' : ''}
+        ${horse ? '<span class="badge bhorse">' + I('zap') + '黑马</span>' : ''}
+        ${d.bait ? '<span class="badge bbait" title="「留言XX」引流打法 — 评论被引流放大,漏斗设计值得学">' + I('magnet') + '引流</span>' : ''}
+        <span class="date" title="${d.date || ''}">${ago}</span>
+      </div>
+      <div class="nums">
+        <span class="num hot" title="Viral Score">${I('flame')}<b>${d.score}</b></span>
+        ${(d.x || 0) >= 2 ? '<span class="num x" title="是自家平均热度的多少倍">' + I('trend') + '<b>×' + d.x + '</b></span>' : ''}
+        <span class="num er" title="Engagement Rate">${I('pct')}<b>${d.er}%</b></span>
+        <span class="num" title="Likes">${I('heart')}<b>${d.likes > 0 ? fmt(d.likes) : '隐藏'}</b></span>
+        <span class="num" title="Comments">${I('msg')}<b>${fmt(d.comments)}</b></span>
+        <span class="num" title="Followers">${I('users')}<b>${fmt(d.followers)}</b></span>
+      </div>
+      <div class="cap" onclick="this.classList.toggle('open')"></div>
+      ${d.brk ? '<div class="ai" onclick="this.classList.toggle(&quot;open&quot;)"></div>' : ''}
+      ${d.my ? '<div class="mine" onclick="this.classList.toggle(&quot;open&quot;)"></div>' : ''}
+      <div class="srow"><label>状态</label><select class="status btn s${d.status}"></select>
+        <button class="abtn copy" title="复制完整文案">${I('copy')}文案</button>
+        ${tr ? '<button class="abtn mic" title="复制视频口播逐字稿">' + I('mic') + '口播</button>' : ''}
+        ${d.my ? '<button class="abtn minec" title="复制我的改写口播稿(可直接拍)">' + I('mic') + '我的稿</button>' : ''}
+        <button class="abtn brief" title="复制拍摄 Brief(数据+Hook+AI拆解+我的稿+口播稿+文案)">${I('clip')}Brief</button>
+        <a class="abtn" href="${d.url}" target="_blank" title="打开 Instagram 原帖">${I('ext')}</a></div>
+    </div>`;
+  const capEl = el.querySelector('.cap');
+  const restTxt = lines.slice(1).join('\n');
+  capEl.innerHTML = hook ? '<b>' + esc(hook) + '</b>' + (restTxt ? '<br>' + esc(restTxt).replace(/\n/g, '<br>') : '') : '';
+  const aiEl = el.querySelector('.ai');
+  if (aiEl) aiEl.innerHTML = '<b>💡 AI 拆解</b><br>' + esc(d.brk).split(String.fromCharCode(10)).join('<br>');
+  const myEl = el.querySelector('.mine');
+  if (myEl) myEl.innerHTML = '<b>🎬 我的版本(可直接拍)</b><br>' + esc(d.my).split(String.fromCharCode(10)).join('<br>');
+  const sel = el.querySelector('.status');
+  STATUSES.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; sel.appendChild(o); });
+  sel.value = d.status;
+  sel.onchange = () => setStatus(d, sel.value);
+  el.querySelector('.copy').onclick = () =>
+    navigator.clipboard.writeText(d.caption || '').then(() => toast('✓ 文案已复制', true));
+  const micBtn = el.querySelector('.mic');
+  if (micBtn) micBtn.onclick = () =>
+    navigator.clipboard.writeText(tr).then(() => toast('✓ 口播稿已复制', true));
+  const mineBtn = el.querySelector('.minec');
+  if (mineBtn) mineBtn.onclick = () =>
+    navigator.clipboard.writeText(d.my).then(() => toast('✓ 我的改写稿已复制', true));
+  el.querySelector('.brief').onclick = () => {
+    const NL = String.fromCharCode(10);
+    const parts = ['🎬 爆款参考 @' + d.competitor + ((d.x || 0) >= 2 ? '(自家平均 ×' + d.x + ')' : ''),
+      '📊 🔥' + d.score + ' | ER ' + d.er + '% | ❤️ ' + (d.likes > 0 ? fmt(d.likes) : '隐藏') +
+      ' | 💬 ' + fmt(d.comments) + ' | 👥 ' + fmt(d.followers) + (ago ? ' | ' + ago : ''),
+      '🔗 ' + d.url, '✍️ Hook: ' + hook];
+    if (d.brk) parts.push('——— AI 拆解 ———', d.brk);
+    if (d.my) parts.push('——— 我的版本(可直接拍)———', d.my);
+    if (tr) parts.push('——— 竞对原口播稿 ———', tr);
+    parts.push('——— 完整文案 ———', d.caption || '');
+    navigator.clipboard.writeText(parts.join(NL)).then(() => toast('✓ Brief 已复制,可直接发给拍摄/剪辑', true));
+  };
+  io.observe(el.querySelector('.embed'));
+  return el;
+}
+
+function render() {
+  renderTabs();
+  const arr = filtered();
+  const grid = $('grid'); grid.innerHTML = '';
+  arr.slice(0, shown).forEach((d, i) => grid.appendChild(card(d, i)));
+  $('empty').style.display = arr.length ? 'none' : '';
+  $('moreWrap').style.display = arr.length > shown ? '' : 'none';
+}
+
+
+function applyStatusCache() {
+  try {
+    const c = JSON.parse(localStorage.getItem('st_cache') || '{}');
+    Object.keys(c).forEach(rid => { const d = byRec[rid]; if (d) d.status = c[rid]; });
+  } catch (e) {}
+}
+
+function cacheStatus(rid, val) {
+  try {
+    const c = JSON.parse(localStorage.getItem('st_cache') || '{}');
+    c[rid] = val; localStorage.setItem('st_cache', JSON.stringify(c));
+  } catch (e) {}
+}
+
+// live status refresh (so weekly-baked page shows current statuses)
+async function refreshStatuses() {
+  applyStatusCache(); render();  // last-known statuses first
+  if (Date.now() - (+localStorage.getItem('st_ts') || 0) < 600000) return;  // 10-min throttle
+  localStorage.setItem('st_ts', String(Date.now()));
+  const fresh = {};
+  try {
+    const r = await fetch(SUPA + '/rest/v1/posts?select=post_id,status', { headers: { 'apikey': ANON } });
+    if (!r.ok) return;
+    (await r.json()).forEach(row => {
+      const d = byRec[row.post_id];
+      if (d) d.status = row.status || '未处理';
+      if (row.status && row.status !== '未处理') fresh[row.post_id] = row.status;
+    });
+    localStorage.setItem('st_cache', JSON.stringify(fresh));
+    render();
+  } catch (e) {}
+}
+
+['fTracker','fComp','fSort'].forEach(id => $(id).onchange = () => { shown = PAGE; render(); });
+$('fSearch').oninput = () => { shown = PAGE; render(); };
+$('fVideo').onclick = () => { videoOnly = !videoOnly; $('fVideo').classList.toggle('on', videoOnly); shown = PAGE; render(); };
+$('moreBtn').onclick = () => { shown += PAGE; render(); };
+
+// preset quick filters
+$('presets').innerHTML = '<span class="lbl">快筛</span>';
+PRESETS.forEach(p => {
+  const c = document.createElement('span'); c.className = 'chip2';
+  c.innerHTML = I(p.icon) + esc(p.label);
+  c.onclick = () => { presetOn[p.k] = !presetOn[p.k]; c.classList.toggle('on', presetOn[p.k]); shown = PAGE; render(); };
+  $('presets').appendChild(c);
+});
+
+// trending hashtags among outlier posts
+if (TRENDS.length) {
+  $('trends').innerHTML = '<span class="lbl">爆款热词</span>';
+  TRENDS.forEach(([tag, n]) => {
+    const c = document.createElement('span'); c.className = 'chip2';
+    c.textContent = '#' + tag + ' ' + n;
+    c.onclick = () => { $('fSearch').value = $('fSearch').value === tag ? '' : tag; shown = PAGE; render(); };
+    $('trends').appendChild(c);
+  });
+} else { $('trends').style.display = 'none'; }
+
+render();
+refreshStatuses();
+</script>
+</body>
+</html>
